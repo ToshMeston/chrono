@@ -42,7 +42,7 @@ function ParsedComponents (components, ref){
         this.imply('year', ref.year())
     }
 
-    this.imply('hour', 12);
+    this.imply('hour', 0);
     this.imply('minute', 0);
     this.imply('second', 0);
     this.imply('millisecond', 0);
