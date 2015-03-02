@@ -1,10 +1,10 @@
 {
   "name": "chrono-node",
   "description": "A natural language date parser in Javascript",
-  "homepage": "http://github.com/berryboy/chrono",
+  "homepage": "https://github.com/ToshMeston",
   "repository": {
     "type": "git",
-    "url": "https://github.com/berryboy/chrono.git"
+    "url": "https://github.com/ToshMeston/chrono.git"
   },
   "license": "MIT",
   "version": "1.0.3",
