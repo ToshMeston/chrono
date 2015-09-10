@@ -38,7 +38,6 @@ test("Test - Compare with native js", function() {
 
 test('Test - Random text', function() { 
 
-    
     var text = "Adam <Adam@supercalendar.com> написал(а):\nThe date is 02.07.2013";
     var result = chrono.parse(text, new Date(2013,5,22,3,33))[0];
     ok(result.text == '02.07.2013', result.text)
@@ -91,9 +90,87 @@ test('Test - Random text', function() {
     
 })
 
+test('Test - Date patterns', function() {
+    var expectDate = new Date(2015, 4, 25, 12, 0);
+
+    text = "2015-05-25";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    text = "2015/05/25";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    var text = "05-25-2015";
+    var results = chrono.parse(text);
+    var resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    text = "05/25/2015";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    text = "05.25.2015";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) );
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    // unambiguous date pattern
+    text = "25/05/2015";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    // ambiguous US date pattern, expect 5th of June
+    expectDate = new Date(2015, 5, 5, 12, 0);
+    text = "06/05/2015";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    expectDate = new Date(2015, 7, 13, 12, 0);
+    text = "2015.8.13";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    expectDate = new Date(2015, 7, 13, 12, 0);
+    text = "2015.08.13";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    expectDate = new Date(2015, 7, 13, 12, 0);
+    text = "2015.08.13";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+});
+
 test("Test - Random non-date patterns", function() {
 
     var text = ' 3'
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
+    var text = '       1'
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
+    var text = '  11 '
     var results = chrono.parse(text);
     ok(results.length == 0, JSON.stringify(results) )
 
